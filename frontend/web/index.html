@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Победа 75</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/js/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
+    <!--script src="https://unpkg.com/axios/dist/axios.min.js"></script-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="header">
+                <h1>{{ sitename }}</h1>
+            </div>
+        </header>
+        <main>
+            <div v-for="newsone in news">
+                <p>{{ newsone.title }}, {{ newsone.date }}, {{ newsone.name }}, {{ newsone.description }}</p>
+            </div>
+        </main>
+    </div>
+    <script type="text/javascript">
+        const url = "http://yiivueb.ppp/news";
+        const webstore = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    sitename: 'Победа 75',
+                    news: ''
+                }
+            },
+            mounted() {
+                axios.get(url).then(response => {this.news = response.data});
+            }
+        });
+    </script>
+    
+</body>
+</html>
+
