@@ -63,7 +63,6 @@ class NewsSearch extends News
             'query' => $query,
         ]);
 
-
         // Варианты фильтрации
         //
         $query->andFilterWhere(['like', 'title', $this->title])->andFilterWhere(['like', 'description', $this->description])
@@ -71,6 +70,7 @@ class NewsSearch extends News
             ->andFilterWhere(['like', Authors::tableName() . '.name', $this->authorName])
             ->andFilterWhere(['like', Authors::tableName() . '.rating', $this->authorRating])
         ;
+        $query->orderBy('id');
 
         return $dataProvider;
     }

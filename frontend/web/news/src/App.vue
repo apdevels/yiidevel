@@ -23,5 +23,6 @@
 
 a { text-decoration: none; color: #409EFF; }
 
+.demonstration { margin: 10px 0; }
 
 </style>

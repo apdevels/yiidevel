@@ -1,26 +1,34 @@
-
 <template>
-<div>
-    <news-header></news-header>
-    <el-row>
-        <el-col :span="15"><div class="grid-content"><h2>{{ news.title }}</h2></div></el-col>
-    </el-row>
-    <el-row>
-        <el-col :span="15"><div class="grid-content"><span>{{ news.date }}</span></div></el-col>
-    </el-row>
-    <el-row>
-        <el-col :span="15"><div class="grid-content" v-html="news.text"></div></el-col>
-    </el-row>
-    <el-row>
-        <el-col :span="5">
-            <el-card shadow="always">
-                <div>Автор: {{ news.name }}</div>
-                <div>Рейтинг автора: {{ news.rating }}</div>
-                <div>Новостей: {{ news.count }}</div>
-            </el-card>
-        </el-col>
-    </el-row>
-</div>
+    <div>
+        <news-header></news-header>
+        <el-row>
+            <el-col :span="15">
+                <div class="grid-content">
+                    <router-link tag="el-link" :to="{name: 'ListNews'}">
+                        <a>Назад</a>
+                    </router-link>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="15"><div class="grid-content"><h2>{{ news.title }}</h2></div></el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="15"><div class="grid-content"><span>{{ news.date }}</span></div></el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="15"><div class="grid-content" v-html="news.text"></div></el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="7">
+                <el-card shadow="always">
+                    <div>Автор: {{ news.name }}</div>
+                    <div>Рейтинг автора: {{ news.rating }}</div>
+                    <div>Новостей: {{ news.count }}</div>
+                </el-card>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>

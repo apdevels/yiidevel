@@ -3,8 +3,8 @@
 <div>
     <news-header></news-header>
     <div>
-        <el-input type="text" placeholder="Please input" size="small" v-model="searchTitle" />
-        <el-button @click="open = true" type="primary">Фильтры</el-button>
+        <el-input type="text" placeholder="Фильтр по заголовку" size="small" v-model="searchTitle" /><br/><br/>
+        <el-button @click="open = true" type="primary">Фильтры</el-button><br/><br/>
     </div>
     
     <!-- Основной вывод через фильтры -->
@@ -23,9 +23,9 @@
             </template> 
         </el-table-column>
 
-        <el-table-column prop="date" label="Дата" width="180"></el-table-column>
-        <el-table-column prop="name" label="Автор" width="180"></el-table-column>
-        <el-table-column prop="description" label="Описание" width="300"></el-table-column>
+        <el-table-column prop="date" label="Дата" width="120"></el-table-column>
+        <el-table-column prop="name" label="Автор" width="200"></el-table-column>
+        <el-table-column prop="description" label="Описание" width="400"></el-table-column>
     </el-table>
 
     
@@ -236,4 +236,3 @@ export default {
     }
 }
 </script>
-

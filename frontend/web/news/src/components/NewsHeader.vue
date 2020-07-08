@@ -1,24 +1,27 @@
 
 <template>
+    <div>
 <el-container>
-    <el-header style="text-align: center; font-size: 12px">
-      <h1>{{title}}</h1>
-    </el-header>
+    <h1 style="font-size: 27px; text-align: center; width: 100%;">
+        Новости
+    </h1>
 </el-container>
+    </div>
 </template>
 
+<!--
 <script>
     export default {
         name: 'news-header',
         data() {
             return {
-                title: 'Новости',
+                title: 'News',
             }
         },
         methods: {
             goBack() {
-                
+                console.log('go back');
             }
         }
     }
-</script>
+</script>-->
