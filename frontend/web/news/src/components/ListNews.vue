@@ -1,4 +1,3 @@
-
 <template>
 <div>
     <news-header></news-header>
@@ -46,8 +45,9 @@
 
     
     <!-- Модальное окно с фильтрами -->
-    <el-dialog title="Фильтры:" :visible.sync="open">
-        <el-form :model="newsForm" status-icon :rules="rules" ref="newsForm" label-width="120px" class="demo-ruleForm">
+    <el-dialog title="Фильтры:" :visible.sync="open" width="31%">
+        <el-form :model="newsForm" status-icon :rules="rules"
+                 ref="newsForm" label-width="120px" class="demo-ruleForm">
             <el-form-item label="Интервал дат:" prop="newsDate">
                 <div class="block">
                     <span class="demonstration"></span>
@@ -68,11 +68,18 @@
                 </div>
             </el-form-item>
             <el-form-item label="Автор:" prop="name">
-                <el-input v-model.lazy="newsForm.name"></el-input>
+                <el-col :span="19">
+                    <el-input v-model.lazy="newsForm.name"></el-input>
+                </el-col>
             </el-form-item>
             <el-form-item class="dialog-footer">
-                <el-button type="success" @click="submitForm('newsForm')">Применить</el-button>
-                <el-button type="primary" @click="open = false">Отменить</el-button>
+                <el-button type="success"
+                           @click="submitForm('newsForm')">
+                    Применить
+                </el-button>
+                <el-button type="primary" @click="open = false">
+                    Отменить
+                </el-button>
             </el-form-item> 
         </el-form>
     </el-dialog>
@@ -94,13 +101,13 @@ export default {
         return {
             open: false,    // Модальное окно
             newsPerPage,
-            pageNumber: Number(this.$route.params.id) || 1,                         // Нужна валидация
+            pageNumber: Number(this.$route.params.id) || 1,
             firstNews: (Number(this.$route.params.id) - 1) * newsPerPage || 0,      
             lastNews:   Number(this.$route.params.id) * newsPerPage || newsPerPage, 
             searchTitle: '',
             newsForm: {
                 newsDate: '',       // Поля ввода формы фильтов
-                name: ''
+                name: ''            //
             },
             rules: {                // Правила валидации формы фильтров
                 date: [
@@ -110,29 +117,32 @@ export default {
                     { min: 3, max: 20, message: 'Текст должет содержать от 3-х до 20-ти символов', trigger: 'blur' }
                 ]
             },
-            flagPageNumberOne: false,       // При смене условий фильтрации страница должна быть первой
+            flagPageNumberOne: false,       // После фильтрации страница должна стать первой
             path: '',
             name:  this.$route.params.name  || '',      //
             date1: this.$route.params.date1 || '',      // Нужна валидация
-            date2: this.$route.params.date2 || '',      // 
+            date2: this.$route.params.date2 || '',      //
             dates: '',
             newsCount: { toShow: 0 },
-            title: 'Список новостей'
+            title: 'Список новостей',
+            exPath: []
             
         };
     },
     filters: {
         tableDates(inputData, d1, d2) {
-            if (d1 == '' || d2 == '') {
+            if (d1 === '' || d2 === '') {
                 return inputData;
             }
             else {
-                const dataSlice = inputData.filter(c => (c.date >= d1 && c.date <= d2));
-                return dataSlice;
+                return inputData.filter(c => (c.date >= d1 && c.date <= d2));
             }
         },
+        /**
+         *
+         */
         tableName(inputData, name, count) {
-            if (name == '') {
+            if (name === '') {
                 count.toShow = inputData.length;
                 return inputData;
             }
@@ -159,33 +169,38 @@ export default {
     },
     methods: {
         /**
-         *
+         *  Метод срабатывает по событию изменения страницы в пагинации
+         *  и определяет первую и последнюю новость для вывода.
          */
         setTableNews() {
-            this.pageNumber = this.flagPageNumberOne ? 1 : this.$refs.pagination.internalCurrentPage;    // Номер страницы из пагинации
+            // Номер страницы из пагинации
+            this.pageNumber = this.flagPageNumberOne ? 1
+                : this.$refs.pagination.internalCurrentPage;
             this.firstNews  = (this.pageNumber - 1) * newsPerPage;
             this.lastNews   = this.pageNumber * newsPerPage;
             this.setUrl();
         },
+        /**
+         * Метод собирает параметры для УРЛа.
+         */
         setUrl() {
             if (this.date1 && this.name && this.pageNumber > 0) {
                 this.$router.push(
                     '/d1/' + this.date1 + '/d2/' + this.date2 + 
-                    '/n/'  + this.name + 
-                    '/p/'  + this.pageNumber
-                    
+                    '/n/'  + this.name +
+                    this.pageOneOrNo(this.pageNumber)
                 );
             }
             else if ( this.date1 && this.pageNumber > 0) {
                 this.$router.push(
-                    '/d1/' + this.date1 + '/d2/' + this.date2 + 
-                    '/p/'  + this.pageNumber
+                    '/d1/' + this.date1 + '/d2/' + this.date2 +
+                    this.pageOneOrNo(this.pageNumber)
                 );
             }
             else if ( this.name && this.pageNumber > 0) {
                 this.$router.push(
-                    '/n/' + this.name + 
-                    '/p/' + this.pageNumber
+                    '/n/' + this.name +
+                    this.pageOneOrNo(this.pageNumber)
                 );
             }
             else if ( this.date1 && this.name) {
@@ -201,19 +216,35 @@ export default {
                 this.$router.push('/n/' + this.name);
             }
             else if (this.pageNumber > 0) {
-                this.$router.push('/p/' + this.pageNumber);
+                // this.$router.push('/p/' + this.pageNumber);
+                this.$router.push(this.pageOneOrNo(this.pageNumber));
             }
             else this.$router.push('/');
 
             this.resetFlagPageNumberOne();
             this.open = false;
+
+            this.exPath = this.$router;
         },
+        /**
+         * Если страница - первая, не надо показывать пагинацию в УРЛе.
+         *
+         * @param page
+         * @returns {string}
+         */
+        pageOneOrNo(page) {
+            return page === 1 ? '/' : '/p/' + page;
+        },
+        /**
+         *
+         * @param newsForm
+         */
         submitForm(newsForm) {
             this.$refs[newsForm].validate((valid) => {
                 if (valid) {
-                    this.pageNumber = 1;            // После применения фильтров 
+                    this.pageNumber = 1;            // После применения фильтров
                     this.setFlagPageNumberOne();    // страница устанавливается в первую
-                    this.dates = this.newsForm.newsDate + '';           // Для сплита нужна строка
+                    this.dates = this.newsForm.newsDate + ''; // Для сплита нужна строка
                     [this.date1, this.date2] = this.dates.split(',');
                     this.name = this.newsForm.name;
                     this.setTableNews();
@@ -230,7 +261,6 @@ export default {
             this.flagPageNumberOne = false;
         }
     },
-    // components: { NewsHeader },
     mounted() {
         this.$store.dispatch('initStore');
     }

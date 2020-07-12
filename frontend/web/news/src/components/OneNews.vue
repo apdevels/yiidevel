@@ -3,11 +3,7 @@
         <news-header></news-header>
         <el-row>
             <el-col :span="15">
-                <div class="grid-content">
-                    <router-link tag="el-link" :to="{name: 'ListNews'}">
-                        <a>Назад</a>
-                    </router-link>
-                </div>
+                <el-button v-on:click="back" type="primary">Назад</el-button>
             </el-col>
         </el-row>
         <el-row>
@@ -49,6 +45,11 @@ export default {
     computed: {
         news() {
             return this.$store.getters.oneNews;
+        }
+    },
+    methods: {
+        back() {
+            this.$router.back();
         }
     },
     mounted() {
