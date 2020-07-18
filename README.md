@@ -5,6 +5,28 @@
     <h1 align="center">Каталог новостей</h1>
     <br>
 </p>
+<p>
+Проект создан для упоминания в резюме в качестве примеро кода<br/>
+и постоянно развивается. В данный момент он ещё довольно сырой.
+</p>
+<h2>О проекте</h2>
+<ol>
+<li>Frontend-часть реализована на JS фреймворке Vue.js. (Vue/CLI)</li>
+<li>При разработке Frontend-части была использована библиотека
+готовых компонентов 
+[Element](https://element.eleme.io/#/en-US/component/quickstart)</li>
+<li>Backend-часть реализована при помощи фреймворка Yii2<br>
+с использованием базы данных MySQL</li>
+</ol>
+
+<p>
+На данный момент реализовано отображение двух страниц: списка новостей
+и просмотра одной новости.<br/>
+Backend - REST-сервис, Frontend - Single Page Application.<br/>
+На backend-е реализованы две связанные даблицы для новостей и авторов.
+</p>
+
+
 
 Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 developing complex Web applications with multiple tiers.

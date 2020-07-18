@@ -28,13 +28,17 @@ export default new Vuex.Store({
                 commit('setStore', response.data)
             });
         },
+        /**
+         *
+         * @param commit
+         * @param id
+         */
         initOneStore: ({commit}, id) => {
             axios.get(url+'/'+id)
             .then((response) => {
                 commit('setOneStore', response.data)
             });
         }
-        
     },
     getters: {
         news:    state => state.news,

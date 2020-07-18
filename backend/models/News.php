@@ -49,8 +49,13 @@ class News extends ActiveRecord
      */
     public function fields()
     {
-        return array_merge(parent::fields(),
-            [
+        return //array_merge(parent::fields(),
+            ([
+                'id',
+                'title',
+                'date',
+                'description',
+                'text',
                 'name' => function($model) {
                     return $model->authors->name;
                 },

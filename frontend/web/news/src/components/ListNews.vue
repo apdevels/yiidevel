@@ -9,8 +9,8 @@
     <!-- Основной вывод через фильтры -->
     <el-table :data="news.filter
         ( data => data.title.toLowerCase().includes(searchTitle) )
-        | tableDates(date1, date2, newsCount)                       
-        | tableName(name, newsCount)                                
+        | tableDates(date1, date2)
+        | tableName(name, newsCount)
         | tablePaginate(firstNews, lastNews)                        
         " stripe border>
 
@@ -30,7 +30,7 @@
     
     <!-- Пагинация -->
     <div class="block">
-        <span class="demonstration">Страницы</span>
+        <div class="demonstration">Страницы:</div>
         <el-pagination
             ref="pagination"
             background
@@ -56,7 +56,6 @@
                         type="daterange"
                         value-format="yyyy-MM-dd"
                         format="yyyy-MM-dd"
-                        align="right"
                         unlink-panels
                         range-separator="-"
                         start-placeholder="Start date"
@@ -119,17 +118,23 @@ export default {
             },
             flagPageNumberOne: false,       // После фильтрации страница должна стать первой
             path: '',
-            name:  this.$route.params.name  || '',      //
-            date1: this.$route.params.date1 || '',      // Нужна валидация
-            date2: this.$route.params.date2 || '',      //
-            dates: '',
+            name:  this.$route.params.name || '',
+            date1: this.$route.params.date1 || '',
+            date2: this.$route.params.date2 || '',
             newsCount: { toShow: 0 },
-            title: 'Список новостей',
-            exPath: []
-            
+            title: 'Список новостей'
         };
     },
     filters: {
+        /**
+         *  tableDates - фильтр по дате (интервал)
+         *
+         * @param {Array} inputData
+         * @param {String} d1
+         * @param {String} d2
+         *
+         * @returns {Array}
+         */
         tableDates(inputData, d1, d2) {
             if (d1 === '' || d2 === '') {
                 return inputData;
@@ -139,7 +144,13 @@ export default {
             }
         },
         /**
+         *  tableName - фильтр по имени автора
          *
+         * @param {Array} inputData
+         * @param {String} name
+         * @param {Object} count
+         *
+         * @returns {Array}
          */
         tableName(inputData, name, count) {
             if (name === '') {
@@ -152,25 +163,42 @@ export default {
                 return dataSlice;
             }
         },
+        /**
+         *  tablePaginate - фильтр по пагинации
+         *
+         * @param {Array} inputData
+         * @param {Number} firstNews
+         * @param {Number} lastNews
+         *
+         * @returns {array}
+         */
         tablePaginate: (inputData, firstNews, lastNews) => {
             return inputData.slice(firstNews, lastNews);
         }
     },
     computed: {
+        /**
+         * Метод news возвращает все новости из хранилища
+         *
+         * @returns {Array}
+         */
         news() {
             return this.$store.getters.news;
         },
+        /**
+         * Метод setPage возвращает текущую страницу
+         *
+         * @returns {Number}
+         */
         setPage() {                        
             return this.pageNumber;
-        },
-        pageSize() {
-            return this.newsCount / newsPerPage;
         },
     },
     methods: {
         /**
-         *  Метод срабатывает по событию изменения страницы в пагинации
-         *  и определяет первую и последнюю новость для вывода.
+         *  Метод setTableNews срабатывает по событию
+         *  изменения страницы в пагинации и определяет
+         *  первую и последнюю новость для вывода.
          */
         setTableNews() {
             // Номер страницы из пагинации
@@ -181,14 +209,17 @@ export default {
             this.setUrl();
         },
         /**
-         * Метод собирает параметры для УРЛа.
+         * Метод setUrl собирает параметры для УРЛа.
+         *
+         * param {String} this.date1
+         * param {String} this.name
+         * param {Number} this.pageNumber
          */
         setUrl() {
             if (this.date1 && this.name && this.pageNumber > 0) {
                 this.$router.push(
-                    '/d1/' + this.date1 + '/d2/' + this.date2 + 
-                    '/n/'  + this.name +
-                    this.pageOneOrNo(this.pageNumber)
+                    '/d1/' + this.date1 + '/d2/' + this.date2 +
+                    '/n/'  + this.name + this.pageOneOrNo(this.pageNumber)
                 );
             }
             else if ( this.date1 && this.pageNumber > 0) {
@@ -222,30 +253,31 @@ export default {
             else this.$router.push('/');
 
             this.resetFlagPageNumberOne();
-            this.open = false;
-
-            this.exPath = this.$router;
+            this.open = false;              // Закрываем модальное окно
         },
         /**
-         * Если страница - первая, не надо показывать пагинацию в УРЛе.
+         * pageOneOrNo не показывает пагинацию в УРЛе
+         * если страница - первая
          *
-         * @param page
-         * @returns {string}
+         * @param {Number} page
+         * @returns {String}
          */
         pageOneOrNo(page) {
             return page === 1 ? '/' : '/p/' + page;
         },
         /**
+         * Метод submitForm - сабмит формы.
          *
-         * @param newsForm
+         * @param {Object} newsForm
          */
         submitForm(newsForm) {
             this.$refs[newsForm].validate((valid) => {
                 if (valid) {
                     this.pageNumber = 1;            // После применения фильтров
                     this.setFlagPageNumberOne();    // страница устанавливается в первую
-                    this.dates = this.newsForm.newsDate + ''; // Для сплита нужна строка
-                    [this.date1, this.date2] = this.dates.split(',');
+                    // this.dates = String(this.newsForm.newsDate);
+                    // Разбивает строку с датами на две даты: "с" и "по"
+                    [this.date1, this.date2] = String(this.newsForm.newsDate).split(',');
                     this.name = this.newsForm.name;
                     this.setTableNews();
                 }

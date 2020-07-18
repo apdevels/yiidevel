@@ -7,13 +7,13 @@
             </el-col>
         </el-row>
         <el-row>
-            <el-col :span="15"><div class="grid-content"><h2>{{ news.title }}</h2></div></el-col>
+            <el-col :span="15"><h2>{{ news.title }}</h2></el-col>
         </el-row>
         <el-row>
-            <el-col :span="15"><div class="grid-content"><span>{{ news.date }}</span></div></el-col>
+            <el-col :span="15"><div>{{ news.date }}</div></el-col>
         </el-row>
         <el-row>
-            <el-col :span="15"><div class="grid-content" v-html="news.text"></div></el-col>
+            <el-col :span="15"><div v-html="news.text"></div></el-col>
         </el-row>
         <el-row>
             <el-col :span="7">
@@ -38,7 +38,6 @@ export default {
     },
     data() {
         return {
-            // news: ''
             idn: this.$route.params.idn
         }
     },
@@ -57,33 +56,3 @@ export default {
     },
 }
 </script>
-
-<style >
-  .el-row {
-    margin-bottom: 20px;
-    width: 1000px;
-    /* &:last-child {
-      margin-bottom: 0;
-    } */
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
-</style>

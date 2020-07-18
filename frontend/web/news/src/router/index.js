@@ -43,6 +43,12 @@ Vue.use(VueRouter)
     props: true
   },
   {
+    path: '/d1/:date1/d2/:date2/n/:name',
+    name: 'ListNewsDatesPage',
+    component: ListNews,
+    props: true
+  },
+  {
     path: '/d1/:date1/d2/:date2/n/:name/p/:id',   // Ну или сделать его единственным для ListNews
     name: 'ListNewsDatesPage',
     component: ListNews,
