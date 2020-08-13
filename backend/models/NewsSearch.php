@@ -6,13 +6,11 @@
  */
 namespace app\models;
 
-//use yii\base\Model;
 use yii\data\ActiveDataProvider;
-//use app\models\News;
 
 /**
  * NewsSearch - класс модели news,
- * представляющий форму поиска.
+ * представляющей форму поиска.
  */
 class NewsSearch extends News
 {
@@ -65,10 +63,17 @@ class NewsSearch extends News
 
         // Варианты фильтрации
         //
-        $query->andFilterWhere(['like', 'title', $this->title])->andFilterWhere(['like', 'description', $this->description])
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'text', $this->text])
-            ->andFilterWhere(['like', Authors::tableName() . '.name', $this->authorName])
-            ->andFilterWhere(['like', Authors::tableName() . '.rating', $this->authorRating])
+            ->andFilterWhere(['like',
+                Authors::tableName()
+                . '.name', $this->authorName]
+            )
+            ->andFilterWhere(['like',
+                Authors::tableName()
+                . '.rating', $this->authorRating]
+            )
         ;
         $query->orderBy('id');
 

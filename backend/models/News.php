@@ -2,9 +2,6 @@
 namespace app\models;
 
 use yii\db\ActiveRecord;
-use yii\web\Linkable;
-use yii\web\Link;
-use yii\helpers\Url;
 
 /**
  * Класс модели News
@@ -15,7 +12,6 @@ use yii\helpers\Url;
  */
 class News extends ActiveRecord
 {
-
     /**
      * @return string
      */
@@ -49,17 +45,17 @@ class News extends ActiveRecord
      */
     public function fields()
     {
-        return //array_merge(parent::fields(),
+        return array_key_exists('id', \Yii::$app->request->queryParams) ?
             ([
                 'id',
                 'title',
                 'date',
-                'description',
                 'text',
-                'name' => function($model) {
+                'description',
+                'name' => function ($model) {
                     return $model->authors->name;
                 },
-                'rating' => function($model) {
+                'rating' => function ($model) {
                     return $model->authors->rating;
                 },
                 'count' => function ($model) {
@@ -67,23 +63,17 @@ class News extends ActiveRecord
                         ->where(['author_id' => $model->authors->id])
                         ->count();
                 }
+            ]) : ([
+                'id',
+                'title',
+                'date',
+                'description',
+                'name' => function ($model) {
+                    return $model->authors->name;
+                },
             ]);
-    }
 
-    /**
-     * @return array|\Closure[]
-     */
-/*    public function extraFields()
-    {
-        return [
-            'count' => function() {
-                return $this::find()
-                    ->groupBy('title')
-                    ->having(['title' => 'Заголовок 4'])
-                    ->count('id');
-            }
-        ];
-    }*/
+    }
 
     /**
      * Метод getAuthors() возвращает данные автора

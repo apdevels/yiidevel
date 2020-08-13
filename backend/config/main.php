@@ -53,26 +53,18 @@ $config = [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                '/' => 'news/index',
-                '/<id:\d+>' => 'news/<id>',
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'news',
                     'pluralize' => false,
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'news-one',
+                    'pluralize' => false,
+                ],
             ],
         ],
-
-
- /*       'urlManager' => [
-            'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
-            'showScriptName' => false,
-            'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'news'],
-            ],
-        ],*/
-
     ],
     'params' => $params,
 ];
