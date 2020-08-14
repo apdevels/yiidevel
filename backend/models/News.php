@@ -32,7 +32,7 @@ class News extends ActiveRecord
             [['description'], 'string', 'max' => 1000],
             [['author_id'], 'exist',
                             'skipOnError' => true,
-                            'targetClass' => Authors::class(),
+                            'targetClass' => Authors::class,
                             'targetAttribute' => ['author_id' => 'id']
             ],
         ];

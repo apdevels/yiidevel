@@ -53,14 +53,10 @@ $config = [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'news',
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'news',
-                    'pluralize' => false,
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'news-one',
                     'pluralize' => false,
                 ],
             ],
