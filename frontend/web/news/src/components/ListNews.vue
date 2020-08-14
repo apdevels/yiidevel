@@ -1,7 +1,7 @@
 <template>
 <div>
     <news-header></news-header>
-    <div>
+    <div class="col-3">
         <el-input type="text" placeholder="Фильтр по заголовку" size="small" v-model="searchTitle" /><br/><br/>
         <el-button @click="open = true" type="primary">Фильтры</el-button><br/><br/>
     </div>
@@ -12,9 +12,10 @@
         | tableDates(date1, date2)
         | tableName(name, newsCount)
         | tablePaginate(firstNews, lastNews)                        
-        " stripe border>
+        "
+              stripe border>
 
-        <el-table-column width="180" label="Заголовок">
+        <el-table-column width="280" label="Заголовок">
             <template slot-scope="scope">
                 <router-link tag="el-link" :to="{name: 'OneNews', params: {idn: scope.row.id}}">
                     <a>{{scope.row.title}}</a>
@@ -24,7 +25,7 @@
 
         <el-table-column prop="date" label="Дата" width="120"></el-table-column>
         <el-table-column prop="name" label="Автор" width="200"></el-table-column>
-        <el-table-column prop="description" label="Описание" width="400"></el-table-column>
+        <el-table-column prop="description" label="Описание" width="399"></el-table-column>
     </el-table>
 
     
