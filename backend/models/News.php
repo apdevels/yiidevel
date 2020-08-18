@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -45,7 +46,7 @@ class News extends ActiveRecord
      */
     public function fields()
     {
-        return array_key_exists('id', \Yii::$app->request->queryParams) ?
+        return array_key_exists('id', Yii::$app->request->queryParams) ?
             ([
                 'id',
                 'title',

@@ -6,7 +6,7 @@ import VueAxios from 'vue-axios'
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 
-const url = "http://yiidevelb.ppp/news";
+const url = "http://yiidevelb.r3p.ru/news";
 
 export default new Vuex.Store({
     state: {

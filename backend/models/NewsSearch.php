@@ -22,7 +22,7 @@ class NewsSearch extends News
     public $authorName;
 
     /**
-     * Реитинг автора
+     * Рейтинг автора
      *
      * @var string
      */
@@ -48,11 +48,9 @@ class NewsSearch extends News
      * Метод search создаёт экземпляр ActiveDataProvider
      * с используемым поисковым запросом
      *
-     * @param array $params
-     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search()
     {
         $query = News::find();
         $query->innerJoinWith(['authors']);

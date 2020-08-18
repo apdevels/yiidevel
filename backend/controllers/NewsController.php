@@ -1,6 +1,9 @@
 <?php
 namespace app\controllers;
 
+use app\models\NewsSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 
 /**
@@ -33,11 +36,11 @@ class NewsController extends ActiveController
     }
 
     /**
-     * @return \yii\data\ActiveDataProvider
+     * @return ActiveDataProvider
      */
     public function prepareDataProvider()
     {
-        $searchModel = new \app\models\NewsSearch();
-        return $searchModel->search(\Yii::$app->request->queryParams);
+        $searchModel = new NewsSearch();
+        return $searchModel->search();
     }
 }

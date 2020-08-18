@@ -1,8 +1,9 @@
 <template>
 <div>
     <news-header></news-header>
-    <div class="col-3">
-        <el-input type="text" placeholder="Фильтр по заголовку" size="small" v-model="searchTitle" /><br/><br/>
+    <div>
+        <el-input type="text" placeholder="Фильтр по заголовку" size="small" v-model="searchTitle" />
+        <br/><br/>
         <el-button @click="open = true" type="primary">Фильтры</el-button><br/><br/>
     </div>
     
@@ -103,7 +104,7 @@ export default {
             newsPerPage,
             pageNumber: Number(this.$route.params.id) || 1,
             firstNews: (Number(this.$route.params.id) - 1) * newsPerPage || 0,      
-            lastNews:   Number(this.$route.params.id) * newsPerPage || newsPerPage, 
+            lastNews: Number(this.$route.params.id) * newsPerPage || newsPerPage,
             searchTitle: '',
             newsForm: {
                 newsDate: '',       // Поля ввода формы фильтов
@@ -111,13 +112,21 @@ export default {
             },
             rules: {                // Правила валидации формы фильтров
                 date: [
-                    { type: 'daterange',  message: 'Please pick a date', trigger: 'change' }
+                    { type: 'daterange',
+                      message: 'Please pick a date',
+                      trigger: 'change'
+                    }
                 ],
                 name: [
-                    { min: 3, max: 20, message: 'Текст должет содержать от 3-х до 20-ти символов', trigger: 'blur' }
+                    { min: 3,
+                      max: 20,
+                      message: 'Текст должет содержать от 3-х до 20-ти символов',
+                      trigger: 'blur'
+                    }
                 ]
             },
-            flagPageNumberOne: false,       // После фильтрации страница должна стать первой
+            // После фильтрации страница должна стать первой
+            flagPageNumberOne: false,
             path: '',
             name:  this.$route.params.name || '',
             date1: this.$route.params.date1 || '',
@@ -248,7 +257,6 @@ export default {
                 this.$router.push('/n/' + this.name);
             }
             else if (this.pageNumber > 0) {
-                // this.$router.push('/p/' + this.pageNumber);
                 this.$router.push(this.pageOneOrNo(this.pageNumber));
             }
             else this.$router.push('/');
@@ -276,7 +284,6 @@ export default {
                 if (valid) {
                     this.pageNumber = 1;            // После применения фильтров
                     this.setFlagPageNumberOne();    // страница устанавливается в первую
-                    // this.dates = String(this.newsForm.newsDate);
                     // Разбивает строку с датами на две даты: "с" и "по"
                     [this.date1, this.date2] = String(this.newsForm.newsDate).split(',');
                     this.name = this.newsForm.name;
