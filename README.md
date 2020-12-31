@@ -1,10 +1,4 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Каталог новостей</h1>
-    <br>
-</p>
+<h1 align="center">Каталог новостей</h1>
 <p>
 Проект создан для упоминания в резюме в качестве примера кода<br/>
 и постепенно дополняется.
